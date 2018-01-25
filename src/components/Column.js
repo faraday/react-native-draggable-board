@@ -86,12 +86,12 @@ class Column extends React.Component {
     this.props.onScrollingStarted();
 
     const column = this.props.rowRepository.column(this.props.column.id());
-    const liveOffset = event.nativeEvent.contentOffset.y;
+    const liveOffset = event.nativeEvent.contentOffset.x;
     this.scrollingDown = liveOffset > column.scrollOffset();
   }
 
   endScrolling(event) {
-    const currentOffset = event.nativeEvent.contentOffset.y;
+    const currentOffset = event.nativeEvent.contentOffset.x;
     const column = this.props.rowRepository.column(this.props.column.id());
     const scrollingDownEnded = this.scrollingDown && currentOffset >= column.scrollOffset();
     const scrollingUpEnded = !this.scrollingDown && currentOffset <= column.scrollOffset();
@@ -111,8 +111,12 @@ class Column extends React.Component {
     this.props.onScrollingEnded();
   }
 
-  onContentSizeChange(_, contentHeight) {
+  /* onContentSizeChange(_, contentHeight) {
     this.props.rowRepository.setContentHeight(this.props.column.id(), contentHeight);
+  } */
+
+  onContentSizeChange(contentWidth, _) {
+    this.props.rowRepository.setContentWidth(this.props.column.id(), contentWidth);
   }
 
   handleChangeVisibleItems(visibleItems) {
@@ -129,10 +133,11 @@ class Column extends React.Component {
   render() {
     return (
       <View
-        style={{ flex: 1 }}
+        style={{ flex: 1,  }}
         ref={this.setColumnRef.bind(this)}
         onLayout={this.updateColumnWithLayout.bind(this)}>
         <ListView
+          horizontal={true}
           dataSource={this.dataSource()}
           ref={this.setListView.bind(this)}
           onScroll={this.handleScroll.bind(this)}

@@ -63,8 +63,8 @@ class Mover {
     }
     const lastItem = visibleItems[visibleItems.length - 1];
     const lastLayout = lastItem.layout();
-    const newLastY = lastLayout.y + lastLayout.height;
-    lastItem.setLayout(Object.assign(lastLayout, { y: newLastY }));
+    const newLastX = lastLayout.x + lastLayout.width;
+    lastItem.setLayout(Object.assign(lastLayout, { x: newLastX }));
 
     const column = registry.column(toColumnId);
     column.updateLastItemVisibility();
@@ -102,16 +102,16 @@ class Mover {
     let secondId = secondItem.id();
     let firstIndex = firstItem.index();
     let secondIndex = secondItem.index();
-    let firstY = firstItem.layout().y;
-    let secondHeight = secondItem.layout().height;
+    let firstX = firstItem.layout().x;
+    let secondWidth = secondItem.layout().width;
     let firstRef = firstItem.ref();
     let secondRef = secondItem.ref();
 
     firstItem.setIndex(secondIndex);
     secondItem.setIndex(firstIndex);
 
-    firstItem.setLayout(Object.assign(firstItem.layout(), { y: firstY + secondHeight }));
-    secondItem.setLayout(Object.assign(secondItem.layout(), { y: firstY }));
+    firstItem.setLayout(Object.assign(firstItem.layout(), { x: firstX + secondWidth }));
+    secondItem.setLayout(Object.assign(secondItem.layout(), { x: firstX }));
 
     firstItem.setRef(secondRef);
     secondItem.setRef(firstRef);

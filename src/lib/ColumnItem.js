@@ -46,6 +46,10 @@ class ColumnItem {
     return this._attributes.contentHeight;
   }
 
+  contentWidth() {
+    return this._attributes.contentWidth;
+  }
+
   id() {
     return this._attributes.id;
   }
@@ -76,6 +80,10 @@ class ColumnItem {
 
   setContentHeight(contentHeight) {
     this._attributes.contentHeight = contentHeight;
+  }
+
+  setContentWidth(contentWidth) {
+    this._attributes.contentWidth = contentWidth;
   }
 
   setRef(ref) {

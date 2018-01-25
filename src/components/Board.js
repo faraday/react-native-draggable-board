@@ -13,8 +13,8 @@ import {
 
 class Board extends React.Component {
   MAX_RANGE = 100
-  MAX_DEG = 30
-  TRESHOLD = 35
+  MAX_DEG = 10
+  TRESHOLD = 15
 
   constructor(props) {
     super(props);
@@ -67,7 +67,7 @@ class Board extends React.Component {
   }
 
   shouldScroll(scrolling, offset, column) {
-    const placeToScroll = ((offset < 0 && column.scrollOffset() > 0) || (offset > 0 && column.scrollOffset() < column.contentHeight()));
+    const placeToScroll = ((offset < 0 && column.scrollOffset() > 0) || (offset > 0 && column.scrollOffset() < column.contentWidth()));
 
     return scrolling && offset != 0 && placeToScroll;
   }
@@ -90,7 +90,7 @@ class Board extends React.Component {
       const scrollOffset = column.scrollOffset() + 70 * anOffset;
       this.props.rowRepository.setScrollOffset(column.id(), scrollOffset);
 
-      column.listView().scrollTo({ y: scrollOffset });
+      column.listView().scrollTo({ x: scrollOffset });
     }
 
     this.props.rowRepository.move(draggedItem, this.x, this.y);
@@ -117,7 +117,7 @@ class Board extends React.Component {
     this.x = null;
     this.y = null;
     if (this.state.movingMode) {
-      this.rotateBack();
+      // this.rotateBack();
       this.props.setTimeout(this.endMoving.bind(this), 200);
     } else if (this.isScrolling()) {
       this.unsubscribeFromMovingMode();
@@ -223,7 +223,7 @@ class Board extends React.Component {
       outputRange: [`-${this.MAX_DEG}deg`, '0deg', `${this.MAX_DEG}deg`]
     });
     return {
-      transform: [{rotate: interpolatedRotateAnimation}],
+      // transform: [{rotate: interpolatedRotateAnimation}],
       position: 'absolute',
       zIndex: zIndex,
       top: this.state.y - this.TRESHOLD,
@@ -277,8 +277,9 @@ class Board extends React.Component {
         scrollEnabled={!this.state.movingMode}
         onScroll={this.onScroll.bind(this)}
         onScrollEndDrag={this.onScrollEnd.bind(this)}
+        scrollEventThrottle={0}
         onMomentumScrollEnd={this.onScrollEnd.bind(this)}
-        horizontal={true}
+        vertical={true}
         {...this.panResponder.panHandlers}
       >
         {this.movingTask()}

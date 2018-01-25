@@ -54,6 +54,11 @@ class RowRepository {
     column.setContentHeight(contentHeight);
   }
 
+  setContentWidth(columnId, contentWidth) {
+    const column = this.registry.column(columnId);
+    column.setContentWidth(contentWidth);
+  }
+
   setItemRef(columnId, item, ref) {
     item.setRef(ref);
   }
